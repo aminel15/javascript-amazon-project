@@ -656,5 +656,25 @@ const products = [
       "apparel",
       "mens"
     ]
+  },{
+    id:"8cf9b5b7-2542-444b-8648-3e89685e9a5c",
+    image:"images/products/backpack.jpg",
+    name:"BackPack",
+    rating:{
+      stars: 3,
+      count: 1300
+    },
+    priceCents:5012
+  },{
+    id:"0fed08f9-e711-45fd-b47b-075c7baa3677",
+    image:"images/products/umbrella.jpg",
+    name:"Umbrella",
+    rating:{
+      stars: 5,
+      count: 4000
+    },
+    priceCents:3030
   }
 ];
+//8cf9b5b7-2542-444b-8648-3e89685e9a5c
+//0fed08f9-e711-45fd-b47b-075c7baa3677

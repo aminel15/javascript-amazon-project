@@ -1,5 +1,7 @@
-import { cart , addToCart } from "../data/cart.js";
+import { cart, addToCart } from "../data/cart.js";
 import { products } from "../data/products.js";
+import { formatCurrency } from "./Utils/money.js";
+
 let productHTML = "";
 products.forEach((product) => {
   productHTML += `
@@ -23,7 +25,7 @@ products.forEach((product) => {
             <div class="product-rating-count link-primary">${product.rating.count}</div>
           </div>
 
-          <div class="product-price">$${(product.priceCents / 100).toFixed(2)}</div>
+          <div class="product-price">$${formatCurrency(product.priceCents)}</div>
 
           <div class="product-quantity-container">
             <select class="js-quantity-selector-${product.id}">
@@ -52,7 +54,6 @@ products.forEach((product) => {
     `;
 });
 
-
 function ubdateCartQuantity() {
   let cartQuantity = 0;
   cart.forEach((cartItem) => {
@@ -69,7 +70,7 @@ document.querySelectorAll(".js-add-to-cart").forEach((button) => {
     const { productId } = button.dataset;
 
     const previousTimeoutId = addedMessageTimeouts[productId];
-    
+
     let addedToCart = document.querySelector(`.js-added-to-cart-${productId}`);
 
     addedToCart.classList.add("show-added-to-cart");

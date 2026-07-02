@@ -1,3 +1,12 @@
+export function getProduct (productId){
+  let matchingItem;
+  products.forEach((product) => {
+      if (product.id === productId) {
+        matchingItem = product;
+      }
+  });
+  return matchingItem ; 
+}
 export const products = [
   {
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
@@ -676,5 +685,3 @@ export const products = [
     priceCents:3030
   }
 ];
-//8cf9b5b7-2542-444b-8648-3e89685e9a5c
-//0fed08f9-e711-45fd-b47b-075c7baa3677

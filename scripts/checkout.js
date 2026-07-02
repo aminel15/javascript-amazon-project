@@ -3,6 +3,7 @@ import {
   removeFromCart,
   calculateCartQuantity,
   updateQuantity,
+  updateDeliveryOption,
 } from "../data/cart.js";
 import { products } from "../data/products.js";
 import { formatCurrency } from "./Utils/money.js";
@@ -91,7 +92,7 @@ function deliveryOptionsHTML(matchingItem, cartItem){
     const priceString = deliveryOption.priceCents === 0 ? 'FREE' : `$${formatCurrency(deliveryOption.priceCents)} -`
     const isChecked = deliveryOption.id === cartItem.deliveryOptionId   
     html+= `
-      <div class="delivery-option">
+      <div class="delivery-option js-delivery-option" data-product-id = '${matchingItem.id}' data-delivery-option-id = '${deliveryOption.id}'>
         <input
           ${isChecked ? 'checked' : ''}
           type="radio"
@@ -170,60 +171,19 @@ document.querySelectorAll(".js-save-quantity-link").forEach((link) => {
     saveQuantity(productId);
   });
 });
-    // <div class="delivery-option">
-      //   <input
-      //     type="radio"
-      //     checked
-      //     class="delivery-option-input"
-      //     name="delivery-option-${matchingItem.id}"
-      //   />
-      //   <div>
-      //     <div class="delivery-option-date">Tuesday, June 21</div>
-      //     <div class="delivery-option-price">FREE Shipping</div>
-      //   </div>
-      // </div>
-      // <div class="delivery-option">
-      //   <input
-      //     type="radio"
-      //     class="delivery-option-input"
-      //     name="delivery-option-${matchingItem.id}"
-      //   />
-      //   <div>
-      //     <div class="delivery-option-date">Wednesday, June 15</div>
-      //     <div class="delivery-option-price">$4.99 - Shipping</div>
-      //   </div>
-      // </div>
-      // <div class="delivery-option">
-      //   <input
-      //     type="radio"
-      //     class="delivery-option-input"
-      //     name="delivery-option-${matchingItem.id}"
-      //   />
-      //   <div>
-      //     <div class="delivery-option-date">Monday, June 13</div>
-      //     <div class="delivery-option-price">$9.99 - Shipping</div>
-      //   </div>
-      // </div>
-  //        let days;
-  //  let today = dayjs()
-  //  let deliveryDateFormat;
-  //  let deliveryDate;
-  //  let price = 0;
-  // deliveryOptions.forEach((option)=>{
-  //   // console.log(price);
-  //   if (option.id === cart.deliveryOptionId) {
-  //     price = option.priceCents ; 
-  //     //cart = option   cart.deliveryoid => deliveryos.id => price  
-  //     deliveryDate = today.add(option.deliveryDays, 'days');
-        
-  //       deliveryDateFormat = deliveryDate.format("dddd, MMMM D");
-  //     }
-  //     console.log(option.id);
-  //     console.log(cart.deliveryOptionId + " cart id");
-  //     // console.log(deliveryDateFormat);
-  //     // console.log(deliveryDateFormat);
-  //   })
-  //   // console.log(price);
-  // let optionsHTML;
-  // //let today = dayjs()
-  
+
+document.querySelectorAll('.js-delivery-option').forEach((element)=>{
+  element.addEventListener('click', ()=>{
+    const {productId,deliveryOptionId} = element.dataset ;
+    updateDeliveryOption(productId,deliveryOptionId);
+  } );
+});
+
+
+
+
+
+
+
+
+

@@ -13,19 +13,21 @@ import {
   getDeliveryOption,
 } from "../../data/deliveryOptions.js";
 import { renderPaymentSummary } from "../checkout/paymentSummary.js";
+import { renderCheckoutHeader } from "./checkoutHeader.js";
+import { isWeekend } from "../Utils/DateAndTime.js";
+import { calculateDeliveryDate } from "../../data/deliveryOptions.js";
 
 export function renderCartSummaryHTML() {
   let cartSummaryHTML = "";
   cart.forEach((cartItem) => {
-    
     const productId = cartItem.productId;
     const matchingItem = getProduct(productId);
     const deliveryOptionId = cartItem.deliveryOptionId;
     const deliveryOption = getDeliveryOption(deliveryOptionId);
-    const today = dayjs();
-    const deliveryDate = today.add(deliveryOption.deliveryDays, "day");
-    const dateString = deliveryDate.format("dddd, MMMM D");
+   
 
+    const dateString = calculateDeliveryDate(deliveryOption);
+    
     cartSummaryHTML += ` 
         <div class="cart-item-container js-cart-item-container-${matchingItem.id}">
         <div class="delivery-date">Delivery date: ${dateString}</div>
@@ -68,11 +70,17 @@ export function renderCartSummaryHTML() {
   function deliveryOptionsHTML(matchingItem, cartItem) {
     let html = "";
     deliveryOptions.forEach((deliveryOption) => {
-      const today = dayjs();
-      const deliveryDate = today.add(deliveryOption.deliveryDays, "day");
+      // const today = dayjs();
+      // let final = "";
+      // let deliveryDate = today.add(deliveryOption.deliveryDays, "day");
+      // if (isWeekend(deliveryDate) === 0) {
+      //   deliveryDate = today.add(deliveryOption.deliveryDays + 3, "day"); // today-> daliverydate = object == > format -- > 
+      // } else if (isWeekend(deliveryDate) === 6) {
+      //   deliveryDate = today.add(deliveryOption.deliveryDays + 2, "day");
+      // }
 
-      const dateString = deliveryDate.format("dddd, MMMM D");
-
+      // const dateString = deliveryDate.format("dddd, MMMM D");
+      let dateString = calculateDeliveryDate(deliveryOption);
       const priceString =
         deliveryOption.priceCents === 0
           ? "FREE"
@@ -97,11 +105,7 @@ export function renderCartSummaryHTML() {
 
   document.querySelector(".js-order-summary").innerHTML = cartSummaryHTML;
 
-  function updateCartQuantity() {
-    return (document.querySelector(".js-return-to-home-link").innerHTML =
-      `${calculateCartQuantity()} items`);
-  }
-  updateCartQuantity();
+  renderCheckoutHeader();
 
   function saveQuantity(productId) {
     const container = document.querySelector(
@@ -117,7 +121,7 @@ export function renderCartSummaryHTML() {
       document.querySelector(`.js-quantity-label-${productId}`).innerHTML =
         updateQuantity(productId, newQuantity);
 
-      updateCartQuantity();
+      renderCheckoutHeader();
       renderPaymentSummary();
       quantityInput.value = "";
     }
@@ -127,12 +131,12 @@ export function renderCartSummaryHTML() {
     link.addEventListener("click", () => {
       let productId = link.dataset.productId;
       removeFromCart(productId);
-      const container = document.querySelector(
+      /*   const container = document.querySelector(
         `.js-cart-item-container-${productId}`,
-      );
-      container.remove();
-
-      updateCartQuantity();
+      ); */
+      //container.remove();
+      renderCartSummaryHTML();
+      renderCheckoutHeader();
       renderPaymentSummary();
     });
   });
@@ -172,3 +176,13 @@ export function renderCartSummaryHTML() {
     });
   });
 }
+
+//   console.log(dayjs().add(5, 'days').format('MMMM D'));
+//   console.log(dayjs().add(1, 'M').format('MMMM D'));
+//   console.log(dayjs().subtract(1, 'M').format('MMMM D'));
+//   console.log(dayjs().format("'dddd'"));
+// export function isWeekend (date){
+//     return dayjs().format(date);
+
+//   }
+//   console.log(isWeekend('d'));

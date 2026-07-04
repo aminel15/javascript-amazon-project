@@ -24,10 +24,9 @@ export function renderCartSummaryHTML() {
     const matchingItem = getProduct(productId);
     const deliveryOptionId = cartItem.deliveryOptionId;
     const deliveryOption = getDeliveryOption(deliveryOptionId);
-   
 
     const dateString = calculateDeliveryDate(deliveryOption);
-    
+    // ${matchingItem.getPrice()}
     cartSummaryHTML += ` 
         <div class="cart-item-container js-cart-item-container-${matchingItem.id}">
         <div class="delivery-date">Delivery date: ${dateString}</div>
@@ -41,7 +40,7 @@ export function renderCartSummaryHTML() {
             <div class="product-name">
                 ${matchingItem.name}
             </div>
-            <div class="product-price">$${formatCurrency(matchingItem.priceCents)}</div>
+            <div class="product-price">${matchingItem.getPrice()}</div> 
             <div class="product-quantity">
                 <span> Quantity: <span class="quantity-label js-quantity-label-${matchingItem.id}">${cartItem.quantity}</span> </span>
                 <span class="update-quantity-link link-primary js-update-link" data-product-id=${matchingItem.id}>
@@ -74,7 +73,7 @@ export function renderCartSummaryHTML() {
       // let final = "";
       // let deliveryDate = today.add(deliveryOption.deliveryDays, "day");
       // if (isWeekend(deliveryDate) === 0) {
-      //   deliveryDate = today.add(deliveryOption.deliveryDays + 3, "day"); // today-> daliverydate = object == > format -- > 
+      //   deliveryDate = today.add(deliveryOption.deliveryDays + 3, "day"); // today-> daliverydate = object == > format -- >
       // } else if (isWeekend(deliveryDate) === 6) {
       //   deliveryDate = today.add(deliveryOption.deliveryDays + 2, "day");
       // }

@@ -185,3 +185,14 @@ export function renderCartSummaryHTML() {
 
 //   }
 //   console.log(isWeekend('d'));
+
+/* const conditions = [
+  (v) => !Number.isNaN(v),
+  (v) => v >= 0,
+  (v) => Number.isInteger(v),
+];
+
+function isValid(value) {
+  const num = Number(value);
+  return conditions.every((check) => check(num));
+} */

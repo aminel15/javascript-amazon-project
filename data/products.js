@@ -89,7 +89,7 @@ export function loadProductsFetch (){
       });
     console.log("Load product")
   })
-  return promise
+  return promise;
 } 
 
 

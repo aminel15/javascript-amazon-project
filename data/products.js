@@ -88,6 +88,8 @@ export function loadProductsFetch (){
         return new Product(productDetails);
       });
     console.log("Load product")
+  }).catch(()=>{
+    console.error('error Link')
   })
   return promise;
 } 
